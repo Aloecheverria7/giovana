@@ -49,7 +49,6 @@ class facturaController extends Controller
         $input = $request->all();
 
         $validator = Validator::make($input,[
-            "NumeroF" =>'required|int',
             "idPedidod" =>'required|int',
             "idTipoPedido" => 'required|int',
             "PrecioEnvio" =>'required|int',

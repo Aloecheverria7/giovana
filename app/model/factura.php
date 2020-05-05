@@ -8,6 +8,6 @@ class factura extends Model
 {
     public $table = "factura";
     
-    protected $fillable = ["idFactura","NumeroF", "idPedido","idTipoPedido","PrecioEnvio"];
+    protected $fillable = ["idFactura", "idPedido","idTipoPedido","PrecioEnvio"];
     public $timestamps = false;
 }
