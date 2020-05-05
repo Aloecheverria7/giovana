@@ -8,7 +8,6 @@ class pizza extends Model
 {
     public $table = "pizza";
     
-    protected $fillable = ["Nombre", "Precio","Imagen","TipoPizafk", "Tamañofk", "ingredientefk"];
+    protected $fillable = ["Nombre", "Precio","Imagen","TipoPizafk", "Tamaño", "ingredientefk"];
     public $timestamps = false;
 }
-    

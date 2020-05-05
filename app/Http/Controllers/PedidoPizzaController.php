@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\model\factura;
+use App\model\pedidopizza;
 
 use Validator;
 
-class facturaController extends Controller
+class PedidoPizzaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,16 +16,13 @@ class facturaController extends Controller
      */
     public function index()
     {
-        $Facturas = factura::all();/*select("pedido*")     */
-           
-
-        return response()->
-        json(
-            [
-                "ok"=>true,
-                "data"=>$Facturas,
-                ] 
-            );
+        
+        $ordenes = pedidopizza::all();
+            return response()-> json(
+                                        [
+                                        "ok"=>true,
+                                        "data"=>$ordenes,
+                                        ]);
     }
 
     /**
@@ -46,14 +43,14 @@ class facturaController extends Controller
      */
     public function store(Request $request)
     {
+       
         $input = $request->all();
 
         $validator = Validator::make($input,[
-            "NumeroF" =>'required|int',
-            "idPedidod" =>'required|int',
-            "idTipoPedido" => 'required|int',
-            "PrecioEnvio" =>'required|int',
-           
+             "IdPizza" =>'required|int',
+             "IdFactura"=>'required|int',
+             "Cantidad"=>'required|int',
+             "PrecioU"=>'required|int',  
         ]);
 
         if ($validator->fails()) {
@@ -64,15 +61,15 @@ class facturaController extends Controller
         }
 
         try {
-            factura::create($input);
-            $lastIDF = factura::select("idFactura")
-            ->where("idPedido", $input['idPedidod'])
+            pedidopizza::create($input);
+            $lastIDp = pedidopizza::select("idPedidopizza")
+            ->where("IdFactura", $input['IdFactura'])
             ->First();
 
             return response()->json([
                 "ok" => true,
                 "mensaje" => "Se registro con exito",
-                "lastIdClientef" => $lastIDF,
+                "lastIdClientef" => $lastIDp,
             ]);
 
         } catch (\Exception $ex) {

@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+/*use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;*/
 
 /*
 |--------------------------------------------------------------------------
@@ -14,11 +14,37 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+/*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+/*
+Route::resource('/pizza', 'pizzaController');
+*/
+Route::resource('/factura', 'facturaController')->except([
+    'create', 'edit'
+]);
+
+Route::resource('/pedido', 'PedidoController')->except([
+    'create', 'edit'
+]);
+
+Route::resource('/factura', 'facturaController')->except([
+    'create', 'edit'
+]);
+
+Route::resource('/orden', 'PedidoPizzaController')->except([
+    'create', 'edit'
+]);
+
+Route::resource('/pizza', 'PizzaController')->except([
+    'create', 'edit'
+]);
+
+Route::get('/ingrediente/select', 'tipoingredienteController@select');
 
 
+/*
+Route::resource('/pizza', 'pizzaController/@index');
+/*Route::get('/pizza', 'pizzacontroller@idnex');*/
 
-Route::resource('/Pedido', 'pedido')->except(['create', 'edit']);
 

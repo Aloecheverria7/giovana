@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use app\model\ciente;
-use validator;
+use App\model\pedido;
 
-class clienteController extends Controller
+use Validator;
+
+class PedidoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,12 @@ class clienteController extends Controller
      */
     public function index()
     {
-        //
+        $pedidos = pedido::all();
+            return response()-> json(
+                                        [
+                                        "ok"=>true,
+                                        "data"=>$pedidos,
+                                        ]);
     }
 
     /**
@@ -25,7 +31,7 @@ class clienteController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -39,12 +45,9 @@ class clienteController extends Controller
         $input = $request->all();
 
         $validator = Validator::make($input, [
-            'Nombre' => 'required|unique:producto|max:60',
             'NombreC' => 'required|alpha',
-            'NumeroT' => 'required|numeric',
-            'Direccion' => 'required|alpha_num',
-            'FechaCreac' => 'required|date',
-            'NumeroCliente' => 'required|numeric',
+            'NumeroT' => 'required|int',
+            'Direccion' => 'required|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -55,11 +58,15 @@ class clienteController extends Controller
         }
 
         try {
-            Producto::create($input);
+            pedido::create($input);
+            $lastID = Pedido::select("idPedidoD")
+            ->where("NumeroT", $input['NumeroT'])
+            ->First();
 
             return response()->json([
                 "ok" => true,
                 "mensaje" => "Se registro con exito",
+                "lastIdCliente" => $lastID,
             ]);
 
         } catch (\Exception $ex) {
