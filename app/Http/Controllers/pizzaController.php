@@ -17,7 +17,7 @@ class PizzaController extends Controller
     public function index()
     {
 
-        $Pizzas = pizza::select("Pizza.*", "tipoingrediente.nombre as nombre_ingrediente", "tipopizza.nombre as tipo_pizza")
+        $Pizzas = pizza::select("pizza.*", "tipoingrediente.nombre as nombre_ingrediente", "tipopizza.nombre as tipo_pizza")
             ->join("tipoingrediente", "pizza.ingredientefk", "=", "tipoingrediente.idIngrediente")
             ->join("tipopizza", "pizza.TipoPizafk", "=", "tipopizza.idtipo")
             ->get();
